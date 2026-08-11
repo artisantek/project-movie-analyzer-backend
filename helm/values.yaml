@@ -1,0 +1,65 @@
+backend:
+  env:
+    DB_HOST: moviereviews-instance.ch8ccua4umia.ap-south-1.rds.amazonaws.com
+    DB_NAME: moviereviews
+    DB_PORT: '5432'
+    MODEL_SERVER_URL: http://model:5000
+    SERVER_PORT: '8080'
+  image:
+    pullPolicy: Always
+    repository: __BACKEND_IMAGE_REPOSITORY__
+    tag: __BACKEND_IMAGE_TAG__
+  name: backend
+  probes:
+    liveness:
+      initialDelaySeconds: 15
+      path: /actuator/health
+      periodSeconds: 10
+      port: 8080
+    readiness:
+      initialDelaySeconds: 10
+      path: /actuator/health
+      periodSeconds: 10
+      port: 8080
+  replicaCount: 1
+  resources:
+    limits:
+      cpu: 1000m
+      memory: 1Gi
+    requests:
+      cpu: 500m
+      memory: 512Mi
+  secret:
+    DB_PASSWORD: bW92aWVwYXNz
+    DB_USERNAME: bW92aWV1c2Vy
+  service:
+    port: 8080
+    targetPort: 8080
+    type: ClusterIP
+postgres:
+  image:
+    pullPolicy: IfNotPresent
+    repository: postgres
+    tag: 15-alpine
+  name: database
+  persistence:
+    enabled: true
+    hostPath: /mnt/data/postgres
+    size: 1Gi
+    storageClass: manual
+  replicaCount: 1
+  resources:
+    limits:
+      cpu: 500m
+      memory: 512Mi
+    requests:
+      cpu: 250m
+      memory: 256Mi
+  secret:
+    POSTGRES_DB: bW92aWVyZXZpZXdz
+    POSTGRES_PASSWORD: cG9zdGdyZXM=
+    POSTGRES_USER: cG9zdGdyZXM=
+  service:
+    port: 5432
+    targetPort: 5432
+    type: ClusterIP
