@@ -47,10 +47,7 @@ pipeline {
             steps { kubernetesEKSHelmDeploy('movie-analyzer-backend', 'dev') }
         }
 
-        stage('Kubernetes Deploy - QA') {
-            when { branch 'dev' }
-            steps { kubernetesEKSHelmDeploy('movie-analyzer-backend', 'qa') }
-        }
+
 
         stage('Kubernetes Deploy - STAGING') {
             when { branch 'staging' }
