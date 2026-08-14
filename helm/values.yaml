@@ -36,30 +36,4 @@ backend:
     port: 8080
     targetPort: 8080
     type: ClusterIP
-postgres:
-  image:
-    pullPolicy: IfNotPresent
-    repository: postgres
-    tag: 15-alpine
-  name: database
-  persistence:
-    enabled: true
-    hostPath: /mnt/data/postgres
-    size: 1Gi
-    storageClass: manual
-  replicaCount: 1
-  resources:
-    limits:
-      cpu: 500m
-      memory: 512Mi
-    requests:
-      cpu: 250m
-      memory: 256Mi
-  secret:
-    POSTGRES_DB: bW92aWVyZXZpZXdz
-    POSTGRES_PASSWORD: cG9zdGdyZXM=
-    POSTGRES_USER: cG9zdGdyZXM=
-  service:
-    port: 5432
-    targetPort: 5432
-    type: ClusterIP
+
