@@ -1,0 +1,7 @@
+backend:
+  env:
+    DB_NAME: moviereviews
+  resources:
+    requests:
+      cpu: 100m
+      memory: 128Mi
